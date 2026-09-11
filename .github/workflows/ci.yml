@@ -13,7 +13,7 @@ jobs:
     timeout-minutes: 20
     env:
       BSK_SUPPORT_DATA_CACHE: ${{ github.workspace }}/.bsk/support-data
-      MPLCONFIGDIR: ${{ runner.temp }}/matplotlib
+      MPLCONFIGDIR: ${{ github.workspace }}/.bsk/matplotlib
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
