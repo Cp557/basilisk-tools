@@ -69,14 +69,14 @@ def test_timed_out_run_is_terminated_and_recorded(tmp_path: Path) -> None:
     result = run_scenario(
         FIXTURE_DIR / "timeout.py",
         runs_directory=tmp_path,
-        timeout_seconds=0.05,
+        timeout_seconds=0.5,
     )
 
     assert result.status == RunStatus.TIMEOUT
     assert result.exit_code is not None
     assert result.error is not None
     assert result.error.type == "TimeoutExpired"
-    assert "0.05 second timeout" in result.error.message
+    assert "0.5 second timeout" in result.error.message
     stdout = Path(result.artifacts["stdout"]).read_text(encoding="utf-8")
     assert stdout == "scenario started\n"
 

@@ -40,7 +40,7 @@ def reference_comparison():
 def test_point_mass_scenario_records_verified_telemetry(short_orbit_run) -> None:
     config, result = short_orbit_run
 
-    assert result.passed
+    assert result.passed, [check for check in result.checks if not check.passed]
     assert len(result.times_s) == 7
     assert result.positions_m.shape == (7, 3)
     assert result.velocities_m_s.shape == (7, 3)
@@ -80,7 +80,7 @@ def test_outputs_are_machine_readable(short_orbit_run, tmp_path) -> None:
 def test_point_mass_conservation_metrics_pass(reference_comparison) -> None:
     point_mass, _ = reference_comparison
 
-    assert point_mass.passed
+    assert point_mass.passed, [check for check in point_mass.checks if not check.passed]
     assert point_mass.metrics.max_relative_keplerian_specific_energy_drift < 1e-8
     assert point_mass.metrics.max_relative_specific_angular_momentum_drift < 5e-9
     assert abs(point_mass.metrics.raan_rate_rad_s) < 1e-12
@@ -89,7 +89,7 @@ def test_point_mass_conservation_metrics_pass(reference_comparison) -> None:
 def test_j2_raan_regresses_at_expected_rate(reference_comparison) -> None:
     _, j2 = reference_comparison
 
-    assert j2.passed
+    assert j2.passed, [check for check in j2.checks if not check.passed]
     assert j2.metrics.raan_change_rad < 0.0
     assert j2.metrics.raan_rate_rad_s < 0.0
     assert j2.metrics.expected_raan_rate_rad_s < 0.0
@@ -131,7 +131,7 @@ def test_reference_contract_exposes_pre_execution_structure() -> None:
 def test_reference_contract_runs_declared_verification(tmp_path) -> None:
     report = basilisk_tools_scenario().verify(tmp_path)
 
-    assert report.passed
+    assert report.passed, [check for check in report.checks if not check.passed]
     assert len(report.checks) == 26
     assert all(check.passed for check in report.checks)
     assert set(report.metrics) == {"point-mass", "j2"}
@@ -141,7 +141,7 @@ def test_reference_contract_runs_declared_verification(tmp_path) -> None:
 def test_vizard_playback_files_are_generated_and_registered(tmp_path) -> None:
     report = generate_vizard_playback(tmp_path)
 
-    assert report.passed
+    assert report.passed, [check for check in report.checks if not check.passed]
     for artifact_name in ("point_mass_vizard", "j2_vizard"):
         playback_path = Path(report.artifacts[artifact_name])
         assert playback_path.suffix == ".bin"
