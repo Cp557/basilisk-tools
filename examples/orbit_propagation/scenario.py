@@ -48,6 +48,7 @@ POINT_MASS_ANGULAR_MOMENTUM_DRIFT_TOLERANCE = 5e-9
 POINT_MASS_RAAN_RATE_TOLERANCE_RAD_S = 1e-12
 J2_RAAN_RATE_RELATIVE_TOLERANCE = 0.02
 J2_ANGULAR_MOMENTUM_Z_DRIFT_TOLERANCE = 5e-9
+INITIAL_TRUE_ANOMALY_TOLERANCE_RAD = 5e-8
 TELEMETRY_COLUMNS = (
     "time_s",
     "r_x_m",
@@ -212,7 +213,7 @@ def _checks(
             "initial_true_anomaly",
             elements[0, 5],
             config.true_anomaly_rad,
-            1e-8,
+            INITIAL_TRUE_ANOMALY_TOLERANCE_RAD,
             "rad",
         ),
     )

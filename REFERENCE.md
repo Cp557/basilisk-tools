@@ -72,7 +72,9 @@ Direct-run outputs default to `.bsk/examples/orbit_propagation/`:
 Checks require finite telemetry, strictly increasing time, and agreement between
 the configured and recorded initial state and classical elements. State-vector
 tolerances are 1 mm and 1 micrometer/second; semi-major axis tolerance is 1 m;
-dimensionless and angular element tolerances are `1e-8`.
+dimensionless and angular element tolerances are `1e-8`, except the initial
+true-anomaly tolerance is `5e-8 rad`. Converting an exact zero anomaly from
+state vectors can produce a platform-dependent round-off of about `1.5e-8 rad`.
 
 Analysis calculates Keplerian specific energy, specific angular-momentum
 magnitude and z-component, unwrapped RAAN change, and a least-squares RAAN rate.
