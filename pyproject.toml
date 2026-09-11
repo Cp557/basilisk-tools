@@ -1,0 +1,48 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "basilisk-tools"
+version = "0.1.0"
+description = "Agent-ready tooling for AVS Basilisk spacecraft simulations"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+dependencies = [
+    "bsk==2.11.1",
+    "matplotlib>=3.8,<4",
+    "numpy>=1.26,<3",
+    "rich>=13.9,<15",
+    "typer>=0.16,<1",
+]
+
+[project.scripts]
+bsk = "basilisk_tools.cli:app"
+
+[project.urls]
+Homepage = "https://github.com/Cp557/basilisk-tools"
+Repository = "https://github.com/Cp557/basilisk-tools"
+Issues = "https://github.com/Cp557/basilisk-tools/issues"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3,<10",
+    "pytest-cov>=6,<8",
+    "ruff>=0.11,<1",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/basilisk_tools"]
+
+[tool.pytest.ini_options]
+addopts = "--cov=basilisk_tools --cov-report=term-missing --cov-fail-under=90"
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]

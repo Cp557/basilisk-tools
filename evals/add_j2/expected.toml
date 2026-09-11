@@ -1,0 +1,14 @@
+schema_version = 1
+case = "add_j2"
+scenario_file = "scenario.py"
+gravity_model = "j2"
+timeout_seconds = 45.0
+minimum_samples = 301
+minimum_duration_s = 18000.0
+mu_m3_s2 = 3.986004418e14
+earth_radius_m = 6378136.3
+earth_j2 = 1.0826353865466185e-3
+semi_major_axis_m = 7000000.0
+semi_major_axis_tolerance_m = 100.0
+max_raan_rate_relative_error = 0.03
+max_angular_momentum_z_drift = 1e-7
