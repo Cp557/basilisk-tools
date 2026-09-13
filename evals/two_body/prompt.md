@@ -15,6 +15,6 @@ Requirements:
   the CSV as the `telemetry` artifact so `bsk run` can preserve it.
 - Do not embed fabricated states or evaluator-specific pass values.
 
-Use `bsk doctor`, `bsk run`, and the case verifier as evidence. In
-`explanation.md`, state the units, frame, gravity assumptions, evidence used,
-and important limitations.
+Use `bsk doctor` and `bsk run`; base the explanation on their captured output,
+telemetry, and artifacts. In `explanation.md`, state the units, frame, gravity
+assumptions, evidence used, and important limitations.

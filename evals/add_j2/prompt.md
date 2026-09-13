@@ -6,7 +6,8 @@ includes J2. Preserve the initial orbit, timing, telemetry schema, and artifact
 registration.
 
 Use official Basilisk APIs and support data rather than adding a custom J2
-acceleration. Run the scenario through `bsk run` and use the case verifier.
+acceleration. Run the scenario through `bsk run` and use its captured output,
+telemetry, and artifacts as evidence.
 
 In `explanation.md`, explain the expected sign of the secular RAAN rate for this
 prograde orbit, compare the observed rate with first-order theory, state the
