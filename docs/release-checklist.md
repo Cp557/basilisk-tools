@@ -5,8 +5,8 @@ GitHub Actions run are complete.
 
 ## Publish
 
-- [ ] Make the GitHub repository public.
-- [ ] Check the README, animation, plots, and links on GitHub.
+- [x] Make the GitHub repository public.
+- [x] Check the README, animation, plots, and links on GitHub.
 - [ ] Create the `v0.1.0` tag and release.
 
 ## Final quality gate
