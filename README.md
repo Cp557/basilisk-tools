@@ -1,7 +1,7 @@
 # Basilisk Tools
 
 <p align="center">
-  <img src="icon.svg" width="180" alt="Basilisk Tools satellite icon">
+  <img src="icon.svg" width="180" alt="Basilisk Tools orbit icon">
 </p>
 
 [![CI](https://github.com/Cp557/basilisk-tools/actions/workflows/ci.yml/badge.svg)](https://github.com/Cp557/basilisk-tools/actions/workflows/ci.yml)
@@ -111,6 +111,3 @@ Scenarios are trusted local code. Deep inspection and semantic verification
 require the optional scenario contract. V1 targets Basilisk 2.11.1 and does not
 infer units, frames, telemetry, or physical correctness. Vizard is installed
 separately.
-
-Satellite icon by [Good Stuff No Nonsense](https://www.svgrepo.com/author/Good%20Stuff%20No%20Nonsense/),
-used under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
