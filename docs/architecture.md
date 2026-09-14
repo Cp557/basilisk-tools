@@ -43,7 +43,6 @@ flowchart TB
 | `bsk` CLI | Isolation, runtime facts, structured output, artifact preservation | Replacing the Basilisk Python API |
 | Scenario contract | Exposing configured cases, telemetry declarations, and checks | General plugin lifecycle or arbitrary-code inference |
 | AVS Basilisk | Simulation execution and runtime behavior | Deciding whether the user's engineering claim is justified |
-| External eval verifier | Independent checks on candidate state telemetry | Broad claims about agent quality |
 
 ## Scenario support levels
 
@@ -90,5 +89,3 @@ secrets.
 - `run` success is process evidence only.
 - Numerical claims require recorded telemetry and checks with stated tolerances.
 - Point-mass Keplerian energy is not treated as a J2 conservation invariant.
-- Evaluation verifiers derive their own checks from telemetry and do not trust
-  a candidate's self-reported pass status.

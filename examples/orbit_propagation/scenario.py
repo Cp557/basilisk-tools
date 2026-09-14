@@ -92,9 +92,6 @@ class OrbitConfiguration:
 DEFAULT_CONFIG = OrbitConfiguration()
 
 
-CheckResult = VerificationCheck
-
-
 @dataclass(frozen=True)
 class PreparedOrbit:
     """Configured Basilisk objects ready for initialization and execution."""
@@ -117,7 +114,7 @@ class OrbitRun:
     elements: np.ndarray
     gravitational_parameter_m3_s2: float
     metrics: OrbitMetrics
-    checks: tuple[CheckResult, ...]
+    checks: tuple[VerificationCheck, ...]
 
     @property
     def passed(self) -> bool:
@@ -186,7 +183,7 @@ def _checks(
     velocities_m_s: np.ndarray,
     elements: np.ndarray,
     metrics: OrbitMetrics,
-) -> tuple[CheckResult, ...]:
+) -> tuple[VerificationCheck, ...]:
     finite = bool(
         np.isfinite(times_s).all()
         and np.isfinite(positions_m).all()
@@ -219,14 +216,14 @@ def _checks(
     )
 
     results = [
-        CheckResult("finite_telemetry", finite, finite, True, None, None),
-        CheckResult(
+        VerificationCheck("finite_telemetry", finite, finite, True, None, None),
+        VerificationCheck(
             "strictly_increasing_time", time_ordered, time_ordered, True, None, "s"
         ),
-        CheckResult(
+        VerificationCheck(
             "initial_position", position_error <= 1e-3, position_error, 0.0, 1e-3, "m"
         ),
-        CheckResult(
+        VerificationCheck(
             "initial_velocity", velocity_error <= 1e-6, velocity_error, 0.0, 1e-6, "m/s"
         ),
     ]
@@ -243,7 +240,7 @@ def _checks(
             else abs(float(actual) - expected)
         )
         results.append(
-            CheckResult(
+            VerificationCheck(
                 name=name,
                 passed=error <= tolerance,
                 actual=float(actual),
@@ -256,7 +253,7 @@ def _checks(
     if config.gravity_model is GravityModel.POINT_MASS:
         results.extend(
             (
-                CheckResult(
+                VerificationCheck(
                     name="bounded_keplerian_energy_drift",
                     passed=(
                         metrics.max_relative_keplerian_specific_energy_drift
@@ -267,7 +264,7 @@ def _checks(
                     tolerance=POINT_MASS_ENERGY_DRIFT_TOLERANCE,
                     units=None,
                 ),
-                CheckResult(
+                VerificationCheck(
                     name="bounded_angular_momentum_drift",
                     passed=(
                         metrics.max_relative_specific_angular_momentum_drift
@@ -278,7 +275,7 @@ def _checks(
                     tolerance=POINT_MASS_ANGULAR_MOMENTUM_DRIFT_TOLERANCE,
                     units=None,
                 ),
-                CheckResult(
+                VerificationCheck(
                     name="constant_raan",
                     passed=(
                         abs(metrics.raan_rate_rad_s)
@@ -296,7 +293,7 @@ def _checks(
         rate_tolerance = abs(expected_rate) * J2_RAAN_RATE_RELATIVE_TOLERANCE
         results.extend(
             (
-                CheckResult(
+                VerificationCheck(
                     name="j2_raan_regression",
                     passed=metrics.raan_rate_rad_s < 0.0,
                     actual=metrics.raan_rate_rad_s < 0.0,
@@ -304,7 +301,7 @@ def _checks(
                     tolerance=None,
                     units=None,
                 ),
-                CheckResult(
+                VerificationCheck(
                     name="j2_raan_rate",
                     passed=(
                         abs(metrics.raan_rate_rad_s - expected_rate) <= rate_tolerance
@@ -314,7 +311,7 @@ def _checks(
                     tolerance=rate_tolerance,
                     units="rad/s",
                 ),
-                CheckResult(
+                VerificationCheck(
                     name="bounded_angular_momentum_z_drift",
                     passed=(
                         metrics.max_relative_specific_angular_momentum_z_drift

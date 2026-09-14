@@ -1,7 +1,5 @@
 # Scenario Development
 
-Read this reference when creating or changing a Basilisk Python scenario.
-
 ## Develop from a known-good pattern
 
 1. Run `bsk doctor --json` and note the Basilisk version.

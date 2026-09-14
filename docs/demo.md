@@ -44,13 +44,15 @@ Highlight initial-condition and telemetry-integrity checks, point-mass energy
 and angular-momentum drift, and the J2 RAAN-rate comparison. Explain that a
 successful process alone would not prove these claims.
 
-## 5. Show the agent loop
+## 5. Show optional 3D playback
 
-Give an agent the `fix_units` evaluation prompt. The intended diagnosis is that
-`ClassicElements.a = 7000` means 7 km when paired with Earth's SI gravitational
-parameter, not 7,000 km. The corrected value is `7_000_000.0` m. Run the
-external verifier to demonstrate that it checks the resulting telemetry rather
-than trusting the agent's explanation.
+```bash
+uv run bsk run examples/orbit_propagation/vizard.py --json
+```
+
+Open either registered `.bin` artifact in Vizard to compare the point-mass and
+J2 trajectories in 3D. Vizard is optional and does not participate in the
+numerical checks.
 
 ## Animation source
 
@@ -62,5 +64,4 @@ uv run python docs/render_demo.py
 ```
 
 The animation is a curated walkthrough backed by current command behavior and
-reference metrics; it is not raw benchmark evidence. Preserve complete raw
-outputs for any published agent evaluation separately under `evals/results/`.
+reference metrics.

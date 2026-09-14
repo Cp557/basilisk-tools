@@ -1,8 +1,5 @@
 # Debugging Basilisk Scenarios
 
-Read this reference after a failed launch, incorrect result, broken connection,
-or telemetry problem.
-
 ## Evidence-first loop
 
 ```bash
@@ -12,9 +9,9 @@ bsk run scenario.py --json
 bsk verify scenario.py --json
 ```
 
-Run only the commands relevant to the failure. Use paths returned in JSON to
-read `stderr.log`, `stdout.log`, metadata, telemetry, and verification artifacts.
-Change one causal issue at a time and rerun the narrowest failing check.
+Run only the relevant commands. Follow returned paths to logs, metadata,
+telemetry, and verification artifacts. Change one causal issue at a time and
+rerun the narrowest failing check.
 
 ## Classify before editing
 

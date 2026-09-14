@@ -1,8 +1,5 @@
 # Orbit Propagation
 
-Read this reference for orbital initial conditions, gravity configuration,
-classical elements, and perturbation claims.
-
 ## Declare conventions
 
 For every state or result, identify:
@@ -14,19 +11,15 @@ For every state or result, identify:
 - osculating versus mean elements;
 - included and excluded perturbations.
 
-Basilisk spacecraft translational states such as `r_BN_N` and `v_BN_N` are
-normally SI values expressed in the inertial `N` frame, but confirm the payload
-and scenario documentation rather than relying on naming alone.
+Basilisk translational states such as `r_BN_N` and `v_BN_N` normally use SI
+values in the inertial `N` frame. Confirm the payload documentation.
 
 ## Initialize an orbit
 
-`orbitalMotion.ClassicElements` uses semi-major axis `a`, eccentricity `e`,
-inclination `i`, right ascension of the ascending node `Omega`, argument of
-periapsis `omega`, and true anomaly `f`. Angles are radians. Convert to a state
-with `orbitalMotion.elem2rv(mu, elements)` and assign the spacecraft hub initial
-position and velocity. Element distances must use units consistent with `mu`.
-With Basilisk's standard Earth gravity data, `mu` is in m^3/s^2, so use
-`elements.a = 7_000_000.0` for a 7,000 km semi-major axis, not `7_000`.
+`orbitalMotion.ClassicElements` fields are `a`, `e`, `i`, `Omega`, `omega`, and
+`f`; angles are radians. Convert them with `orbitalMotion.elem2rv(mu, elements)`.
+Distances must match the units of `mu`. Standard Earth data uses m^3/s^2, so a
+7,000 km semi-major axis is `elements.a = 7_000_000.0`, not `7_000`.
 
 Avoid classical-element claims near singular cases: RAAN is undefined for an
 equatorial orbit, and argument of periapsis is undefined for a circular orbit.

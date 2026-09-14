@@ -1,21 +1,21 @@
 # Basilisk Tools
 
+<p align="center">
+  <img src="icon.svg" width="180" alt="Basilisk Tools satellite icon">
+</p>
+
 [![CI](https://github.com/Cp557/basilisk-tools/actions/workflows/ci.yml/badge.svg)](https://github.com/Cp557/basilisk-tools/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Agent-ready tooling for [AVS Basilisk](https://github.com/AVSLab/basilisk), the
-spacecraft simulation framework developed by CU Boulder’s AVS Laboratory.
-Basilisk Tools gives AI coding agents concise domain guidance plus deterministic
-commands for inspecting, running, and verifying simulation scenarios.
+Agent-ready tooling for [AVS Basilisk](https://github.com/AVSLab/basilisk), CU
+Boulder's spacecraft simulation framework. A portable skill provides domain
+guidance while the `bsk` CLI inspects, runs, and verifies scenarios.
 
 ![Basilisk Tools terminal walkthrough](docs/assets/demo.gif)
 
-## Why this exists
-
 An agent can produce valid Python while still getting an engineering simulation
 wrong: kilometers assigned where meters are expected, an incorrect reference
-frame, a missing message connection, or a plausible plot with no numerical
-verification. This project splits those responsibilities:
+frame, a missing message connection, or an unverified plot.
 
 ```mermaid
 flowchart LR
@@ -28,12 +28,12 @@ flowchart LR
     E --> A
 ```
 
-The skill teaches the workflow. The CLI supplies auditable facts. Basilisk
-remains the simulation source of truth.
+The skill guides the agent; the CLI supplies evidence; Basilisk supplies the
+simulation.
 
 ## Quick start
 
-Python 3.11 and [`uv`](https://docs.astral.sh/uv/) are the supported v1 setup:
+Requires Python 3.11+ and [`uv`](https://docs.astral.sh/uv/):
 
 ```bash
 git clone https://github.com/Cp557/basilisk-tools.git
@@ -45,20 +45,19 @@ uv run bsk inspect examples/orbit_propagation/scenario.py
 uv run bsk verify examples/orbit_propagation/scenario.py
 ```
 
-The first J2 operation downloads Basilisk’s versioned degree-2 gravity support
-file. Generated runs and verification artifacts are stored under `.bsk/`.
+The first J2 command downloads a versioned gravity file. Outputs go to `.bsk/`.
 
 ## CLI
 
 | Command | Purpose |
 | --- | --- |
-| `bsk doctor` | Report Python, Basilisk, tool, and dependency versions |
+| `bsk doctor` | Check Python, Basilisk, and dependencies |
 | `bsk run <scenario.py>` | Execute trusted Python in a child process and preserve logs and artifacts |
-| `bsk inspect <scenario.py>` | Report declared processes, tasks, modules, messages, and telemetry |
+| `bsk inspect <scenario.py>` | Report declared structure and telemetry |
 | `bsk verify <scenario-or-run>` | Execute or load deterministic numerical checks |
 
-Every command has readable terminal output; use `--json` for agent-readable
-output. A successful `run` proves process completion, not physical correctness.
+Use `--json` for agent-readable output. A successful run proves execution, not
+physical correctness.
 
 ## Reference result: point mass vs J2
 
@@ -85,53 +84,33 @@ application:
 uv run bsk run examples/orbit_propagation/vizard.py --json
 ```
 
-The `.bin` playback files are registered beside the same telemetry and checks.
-See the [Vizard guide](docs/vizard.md) for installation and playback.
+See the [Vizard guide](docs/vizard.md) to open the registered `.bin` files.
 
 ## Agent skill
 
-One canonical [Basilisk skill](skills/basilisk/SKILL.md) works with Codex,
-Claude Code, and other Agent Skills-compatible tools. It routes agents to short
-references for architecture, scenario development, orbit propagation,
-telemetry, verification, and debugging. See the [installation guide](docs/skill-installation.md).
-
-## Evaluations
-
-Four reproducible cases test two-body creation, J2 configuration, unit-error
-repair, and telemetry repair. External verifiers calculate their own physics
-checks from raw state histories instead of trusting candidate-authored metrics.
-See [the evaluation protocol](evals/README.md).
-
-The harness is calibrated, but no comparative Codex/Claude results are
-published yet. [Evaluation results](evals/results/README.md) clearly distinguish
-that pending experiment from completed engineering checks.
+The canonical [Basilisk skill](skills/basilisk/SKILL.md) works with Codex,
+Claude Code, and other Agent Skills-compatible tools. See the
+[installation guide](docs/skill-installation.md).
 
 ## Project status
 
-The implementation, reference scenario, skill, evaluation harness,
-documentation, tests, CI, and generated visuals form a v1 release candidate.
-Before a public portfolio release, run and publish the controlled agent matrix,
-push the release candidate, and confirm the first GitHub Actions run is green.
+The CLI, skill, demo, tests, and documentation form the `v0.1.0` release
+candidate.
 
 ## Documentation
 
-- [Architecture](docs/architecture.md)
-- [Orbit-propagation results](docs/orbit-results.md)
-- [End-to-end demonstration](docs/demo.md)
-- [Example structured output](docs/example-output.md)
-- [Vizard playback](docs/vizard.md)
-- [V1 release checklist](docs/release-checklist.md)
-- [Skill installation](docs/skill-installation.md)
-- [Evaluation method](evals/README.md)
-- [Technical reference](REFERENCE.md)
-- [Implementation plan](PLAN.md)
-- [MIT license](LICENSE)
+[Architecture](docs/architecture.md) · [Results](docs/orbit-results.md) ·
+[Demo](docs/demo.md) · [JSON examples](docs/example-output.md) ·
+[Vizard](docs/vizard.md) · [Skill installation](docs/skill-installation.md) ·
+[Technical reference](REFERENCE.md) · [Release checklist](docs/release-checklist.md) ·
+[MIT license](LICENSE)
 
 ## Scope and limitations
 
-Basilisk Tools executes trusted local scenarios. Deep inspection and semantic
-verification require the optional scenario contract; arbitrary Python can only
-receive process-level evidence. V1 targets Python 3.11 and Basilisk 2.11.1 and
-does not provide a bundled GUI, cloud runner, solver abstraction, Monte Carlo
-system, or automatic inference of units, frames, telemetry, or physical
-correctness. Optional Vizard playback uses a separately installed application.
+Scenarios are trusted local code. Deep inspection and semantic verification
+require the optional scenario contract. V1 targets Basilisk 2.11.1 and does not
+infer units, frames, telemetry, or physical correctness. Vizard is installed
+separately.
+
+Satellite icon by [Good Stuff No Nonsense](https://www.svgrepo.com/author/Good%20Stuff%20No%20Nonsense/),
+used under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).

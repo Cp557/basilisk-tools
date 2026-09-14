@@ -16,10 +16,8 @@ def test_readme_links_to_release_documentation() -> None:
         "docs/release-checklist.md",
         "docs/skill-installation.md",
         "docs/vizard.md",
-        "evals/README.md",
         "LICENSE",
         "REFERENCE.md",
-        "PLAN.md",
     ):
         assert f"]({relative_path})" in text
         assert (ROOT / relative_path).is_file()
@@ -27,15 +25,19 @@ def test_readme_links_to_release_documentation() -> None:
 
 def test_readme_local_images_exist() -> None:
     text = README.read_text(encoding="utf-8")
-    image_paths = re.findall(r'(?:!\[[^]]*\]\(|src=")([^)"]+\.(?:gif|png))', text)
+    image_paths = re.findall(r'(?:!\[[^]]*\]\(|src=")([^)"]+\.(?:gif|png|svg))', text)
+    local_image_paths = {
+        path for path in image_paths if not path.startswith(("http://", "https://"))
+    }
 
-    assert set(image_paths) == {
+    assert local_image_paths == {
+        "icon.svg",
         "docs/assets/demo.gif",
         "docs/assets/orbit_comparison.png",
         "docs/assets/orbital_elements.png",
     }
-    for relative_path in image_paths:
-        assert (ROOT / relative_path).stat().st_size > 50_000
+    for relative_path in local_image_paths:
+        assert (ROOT / relative_path).stat().st_size > 100
 
 
 def test_generated_visuals_have_expected_formats() -> None:
@@ -48,12 +50,10 @@ def test_generated_visuals_have_expected_formats() -> None:
     assert elements_plot.startswith(b"\x89PNG\r\n\x1a\n")
 
 
-def test_release_claims_keep_pending_work_visible() -> None:
+def test_release_metadata_is_visible() -> None:
     readme = README.read_text(encoding="utf-8")
-    results = (ROOT / "evals/results/README.md").read_text(encoding="utf-8")
 
-    assert "no comparative Codex/Claude results are\npublished yet" in readme
-    assert "No comparative agent runs are published yet" in results
+    assert "v0.1.0" in readme
     assert "License: MIT" in readme
     assert "https://github.com/Cp557/basilisk-tools" in readme
 

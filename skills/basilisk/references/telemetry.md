@@ -1,8 +1,5 @@
 # Telemetry
 
-Read this reference when adding recorders, exporting data, or diagnosing empty,
-stale, mis-timed, or ambiguous telemetry.
-
 ## Record a message
 
 Create the recorder from the producer message and add it to a task before

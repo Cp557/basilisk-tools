@@ -1,8 +1,5 @@
 # Basilisk Architecture
 
-Read this reference when creating or inspecting simulation structure or message
-connections.
-
 ## Mental model
 
 ```text
@@ -34,8 +31,8 @@ For an instrumented scenario:
 bsk inspect scenario.py --json
 ```
 
-The report derives processes, tasks, modules, execution order, connections, and
-unlinked inputs from Basilisk's `SimBaseClass.GetMessageConnectionGraph`.
+The report derives processes, tasks, modules, order, connections, and unlinked
+inputs from Basilisk's `SimBaseClass.GetMessageConnectionGraph`.
 Telemetry units and frames come from the scenario contract because runtime
 objects do not establish those engineering meanings reliably.
 

@@ -1,8 +1,5 @@
 # Verification
 
-Read this reference when defining numerical checks or deciding what a run
-actually proves.
-
 ## Separate evidence levels
 
 1. Process success: Python exited normally.

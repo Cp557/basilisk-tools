@@ -1,43 +1,40 @@
 ---
 name: basilisk
-description: Build, inspect, run, verify, and debug AVS Basilisk spacecraft simulation scenarios. Use when working with Basilisk Python simulations, processes, tasks, modules, messages, telemetry, orbital dynamics, numerical checks, or Basilisk Tools CLI output.
+description: Build, inspect, run, verify, and debug AVS Basilisk spacecraft simulations. Use for Basilisk scenarios, architecture, messages, telemetry, orbital dynamics, or Basilisk Tools CLI output.
 ---
 
 # Basilisk
 
-Develop technically credible Basilisk scenarios and ground conclusions in
-runtime evidence. Keep the requested fidelity and scope; add environmental
-effects or abstractions only when they support the user's objective.
+Develop Basilisk scenarios and support conclusions with runtime evidence. Keep
+the model fidelity and scope requested by the user.
 
-## Route the task
+## References
 
-Read only the references needed for the current work:
+Read only what the task needs:
 
-- Read [architecture.md](references/architecture.md) to configure or inspect
-  processes, tasks, modules, priorities, and messages.
-- Read [scenario-development.md](references/scenario-development.md) to create
-  or modify a scenario and optionally instrument it for Basilisk Tools.
-- Read [orbit-propagation.md](references/orbit-propagation.md) for orbital
-  initial conditions, gravity models, elements, and perturbation analysis.
-- Read [telemetry.md](references/telemetry.md) when recording, exporting, or
-  diagnosing simulation data.
-- Read [verification.md](references/verification.md) when defining tolerances,
-  interpreting results, or making correctness claims.
-- Read [debugging.md](references/debugging.md) after a failed run, incorrect
-  result, missing message connection, or empty/stale telemetry history.
+- [architecture.md](references/architecture.md): processes, tasks, modules,
+  priorities, and messages
+- [scenario-development.md](references/scenario-development.md): creating or
+  instrumenting a scenario
+- [orbit-propagation.md](references/orbit-propagation.md): initial conditions,
+  gravity, elements, and perturbations
+- [telemetry.md](references/telemetry.md): recording, exporting, and diagnosing
+  simulation data
+- [verification.md](references/verification.md): checks, tolerances, and claims
+- [debugging.md](references/debugging.md): failed runs, connections, and bad
+  telemetry
 
-## Ground the implementation
+## Workflow
 
-1. Identify the installed Basilisk version. Prefer documentation and examples
-   for that release over recollection or development-branch APIs.
-2. Search the official examples for the closest working scenario and adapt its
-   module and message pattern. Use existing Basilisk physics modules instead of
-   reimplementing their equations in the scenario.
-3. State units, reference frames, central bodies, time conventions, model
-   assumptions, and excluded effects near the configuration or output.
-4. Separate scenario configuration from execution when inspection is needed.
-   Connect messages and attach recorders before initialization.
-5. Use deterministic evidence to finish the task:
+1. Identify the installed Basilisk version and use documentation for that
+   release.
+2. Adapt the closest official example. Prefer Basilisk modules to equations
+   reimplemented in scenario code.
+3. Make units, frames, central bodies, time conventions, assumptions, and
+   excluded effects explicit.
+4. Connect messages and attach recorders before initialization. Separate
+   configuration from execution when inspection is needed.
+5. Gather the narrowest relevant evidence:
 
 ```bash
 bsk doctor --json
@@ -46,30 +43,21 @@ bsk run path/to/scenario.py --json
 bsk verify path/to/scenario.py --json
 ```
 
+6. After a correction, rerun the failed command and report the configuration,
+   evidence, and remaining limitations.
+
 `inspect` and `verify` require the optional instrumented-scenario contract. If
-the CLI reports exit code 2 or `supported: false`, describe that limitation and
-continue with process-level run evidence; do not invent structure or semantic
-checks.
+they exit 2 or report `supported: false`, continue with source review and
+process-level run evidence. Do not invent unavailable structure or checks.
 
-## Interpret evidence
+## Evidence rules
 
-- Read `result.json`, `metadata.json`, and the referenced logs and artifacts.
-  Scenario text output is in logs, not JSON command output.
-- Treat a successful process exit as evidence that Python execution completed,
-  not that the physics is correct.
-- Make numerical claims only from declared checks, recorded telemetry, or a
-  documented calculation. Distinguish physical variation from integration
-  error and state where each tolerance comes from.
-- Verify finite data, monotonic time, expected shape, initial conditions, and
-  domain invariants appropriate to the model.
-- Rerun the narrowest relevant command after each correction. Report the model,
-  configuration, evidence, and remaining limitations with the conclusion.
-
-## Preserve key boundaries
-
-- Basilisk is the simulation source of truth; Basilisk Tools supplies
-  deterministic operation and evidence.
-- Never infer coordinate frames or units from a variable name alone.
-- Do not claim automatic semantic verification for arbitrary Python scenarios.
+- A successful process exit proves execution, not physical correctness.
+- Read scenario output from the returned logs and artifacts, not CLI JSON.
+- Base numerical claims on declared checks, recorded telemetry, or documented
+  calculations with justified tolerances.
+- Check finite data, monotonic time, shape, initial conditions, and model-specific
+  invariants.
+- Never infer units or coordinate frames from variable names alone.
 - Treat scenarios as trusted local code because CLI commands execute them.
-- Keep exploratory plots separate from deterministic pass/fail checks.
+- Keep exploratory plots separate from pass/fail checks.
